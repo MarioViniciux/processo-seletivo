@@ -166,7 +166,7 @@ Retornar JWT com expiração de **1 minuto**.
 
 Todas as rotas devem exigir o token via Header.
 
----Acessa 
+--- 
 
 ### Nível 5 — Permissões
 
