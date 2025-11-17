@@ -110,7 +110,7 @@ Seu papel será criar APIs e uma interface que permita gerenciar essas entidades
 
 ### Nível 1 — Validação
 
-Crie uma API FastAPI com a rota:
+Crie uma API **FastAPI** com a rota:
 
 `POST /integrations/asset`
 
