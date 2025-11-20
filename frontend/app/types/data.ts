@@ -13,10 +13,13 @@ export interface OwnerCreateData {
 
 export interface OwnerListProps {
   fetchTrigger: number;
+  onEdit: (owner: Owner) => void
 }
 
 export interface OwnerFormProps {
-  onOwnerCreated: () => void;
+  onOwnerUpdated: () => void;
+  initialData?: Owner | null; 
+  onCancelEdit: () => void;
 }
 
 export interface FastAPIError {
@@ -39,10 +42,13 @@ export interface AssetCreateData {
 
 export interface AssetListProps {
   fetchTrigger: number;
+  onEdit: (asset: Asset) => void
 }
 
 export interface AssetFormProps {
-  onAssetCreated: () => void;
+  onAssetUpdated: () => void;
+  initialData?: Asset | null; 
+  onCancelEdit: () => void;
 }
 
 export interface BaseFormProps {

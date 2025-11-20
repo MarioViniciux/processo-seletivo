@@ -4,7 +4,7 @@ import api from '@/api/axios';
 import { AxiosError } from 'axios';
 import { AssetCreateData, AssetFormProps, Owner, FastAPIError } from '@/app/types/data';
 
-const AssetForm: React.FC<AssetFormProps> = ({ onAssetCreated }) => {
+const AssetForm: React.FC<AssetFormProps> = ({ onAssetUpdated, initialData, onCancelEdit }) => {
   const [formData, setFormData] = useState<AssetCreateData>({
     name: '',
     category: '',
@@ -16,7 +16,22 @@ const AssetForm: React.FC<AssetFormProps> = ({ onAssetCreated }) => {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (initialData) {
+        setFormData({
+            name: initialData.name,
+            category: initialData.category,
+            owner_id: initialData.owner_id 
+        });
+        
+        setError('');
+    } else {
+        setFormData({ name: '', category: '', owner_id: '' });
+    }
+  }, [initialData]);
+
   {/* Para o caso de permitir a lista de owners
+
   useEffect(() => {
     const loadOwners = async () => {
         try {
@@ -29,6 +44,7 @@ const AssetForm: React.FC<AssetFormProps> = ({ onAssetCreated }) => {
     };
     loadOwners();
   }, []);
+
   */}
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -48,22 +64,25 @@ const AssetForm: React.FC<AssetFormProps> = ({ onAssetCreated }) => {
     }
 
     try {
-        await api.post('/integrations/asset', formData);
-        
-        setSuccess(`Ativo ${formData.name} cadastrado com sucesso!`);
-        setFormData(prev => ({ ...prev, name: '', category: '' })); 
-        setTimeout(() => {
-            onAssetCreated();
-        }, 100);
+        if (initialData) {
+            await api.put(`/integrations/asset/${initialData.id}`, formData);
+            setSuccess(`Ativo atualizado!`)
+        } else {
+            await api.post('/integrations/asset', formData);
+            setSuccess(`Ativo cadastrado!`)
+        }
 
+        setFormData({ name: '', category: '', owner_id: '' });
+        setTimeout(() => {
+            onAssetUpdated();
+            if(initialData) onCancelEdit()
+        }, 1000); 
     } catch (err) {
         const axiosError = err as AxiosError;
         let errorMessage = "Erro ao salvar.";
         if (axiosError.response) {
             const errorData = axiosError.response.data as FastAPIError;
-            errorMessage = Array.isArray(errorData.detail) 
-                ? String(errorData.detail[0].msg) 
-                : String(errorData.detail);
+            errorMessage = Array.isArray(errorData.detail) ? String(errorData.detail[0].msg) : String(errorData.detail)
         }
         setError(errorMessage);
     } finally {
@@ -114,9 +133,17 @@ const AssetForm: React.FC<AssetFormProps> = ({ onAssetCreated }) => {
         {owners.length === 0 && <small style={{color: 'gray'}}>Nenhum responsável encontrado. Cadastre um primeiro.</small>}
         */}
 
-        <button type="submit" disabled={loading || owners.length === 0} style={{ padding: '10px', backgroundColor: '#0070f3', color: 'white', border: 'none', cursor: 'pointer' }}>
-            {loading ? 'Salvando...' : 'Cadastrar Ativo'}
-        </button>
+        <div style={{ display: 'flex', gap: '10px' }}>
+            <button type="submit" disabled={loading} style={{ padding: '10px', flex: 1, backgroundColor: initialData ? '#faad14' : '#0070f3', color: 'white', border: 'none' }}>
+                {loading ? 'Salvando...' : (initialData ? 'Atualizar' : 'Cadastrar')}
+            </button>
+
+            {initialData && (
+                <button type="button" onClick={onCancelEdit} style={{ padding: '10px', backgroundColor: '#ccc', border: 'none', cursor: 'pointer' }}>
+                    Cancelar
+                </button>
+            )}
+        </div>
       </form>
     </div>
   );
