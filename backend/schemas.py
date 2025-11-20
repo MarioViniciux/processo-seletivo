@@ -39,3 +39,11 @@ class Token(BaseModel):
 class LoginData(BaseModel):
     login: str
     password: str
+
+class UserSchema(BaseModel):
+    id: int
+    login: str
+    is_active: bool
+
+    model_config = ConfigDict(from_attributes=True)
+    

@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException, status
+from typing import List
 from sqlalchemy.orm import Session
 from contextlib import asynccontextmanager
 from . import database, schemas, crud, auth
@@ -8,6 +9,11 @@ import uuid
 async def lifespan(app: FastAPI):
     print("Iniciando a aplicação e criando o database...")
     database.create_db_and_tables()
+
+    with database.SessionLocal() as db:
+        if auth.get_user_by_login(db, login="eyesonasset") is None:
+            auth.create_user(db, login="eyesonasset", password="eyesonasset")
+            print("Usuário de teste 'eyesonasset' criado no DB.")
 
     yield
 
@@ -113,16 +119,39 @@ def delete_asset(
     return
 
 @app.post("/integrations/auth", response_model=schemas.Token)
-def login_for_access_token(form_data: schemas.LoginData):
-    if form_data.login != "eyesonasset" or form_data.password != "eyesonasset":
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Credenciais inválidas.",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+def login_access_token(form_data: schemas.LoginData, db: Session = Depends(database.get_db)):
+    user = auth.get_user_by_login(db, login=form_data.login)
 
-    access_token = auth.create_access_token(
-        data={"sub": form_data.login}
-    )
+    if user is None or not auth.verify_password(form_data.password, user.hashed_password):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Credenciais inválidas", headers={"WWW-Authenticate": "Bearer"})
+    
+    access_token = auth.create_access_token(data={"sub": user.login})
 
     return {"access_token": access_token, "token_type": "bearer"}
+
+@app.post("/integrations/user", response_model=schemas.UserSchema, status_code=status.HTTP_201_CREATED)
+def create_user(user_data: schemas.LoginData, db: Session = Depends(database.get_db)):
+    if auth.get_user_by_login(db, login=user_data.login):
+        raise HTTPException(status_code=400, detail="Login já registrado")
+
+    return auth.create_user(db, login=user_data.login, password=user_data.password)
+
+@app.get("/integrations/user", response_model=List[schemas.UserSchema])
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(database.get_db), current_user: str = Depends(auth.get_current_user)):
+    return auth.get_users(db, skip=skip, limit=limit)
+
+@app.get("/integrations/user/{user_id}", response_model=schemas.UserSchema)
+def read_user_by_id(user_id: int, db: Session = Depends(database.get_db), current_user: str = Depends(auth.get_current_user)):
+    user = auth.get_user_by_id(db, user_id=user_id)
+
+    if user is None:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado")
+    
+    return user
+
+@app.delete("/integrations/user/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_user(user_id: int, db: Session = Depends(database.get_db), current_user: str = Depends(auth.get_current_user)):
+    if auth.delete_user(db, user_id=user_id) is None:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado")
+
+    return
