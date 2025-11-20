@@ -6,6 +6,9 @@ import uuid
 def get_owner(db: Session, owner_id: uuid.UUID):
     return db.query(database.Owner).filter(database.Owner.id == owner_id).first()
 
+def get_owners(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(database.Owner).offset(skip).limit(limit).all()
+
 def update_owner(db: Session, owner_id: uuid.UUID, owner_update: schemas.OwnerUpdate) -> Optional[database.Owner]:
     db_owner = db.query(database.Owner).filter(database.Owner.id == owner_id).first()
 
@@ -42,6 +45,9 @@ def create_asset(db: Session, asset: schemas.AssetCreate):
 
 def get_asset(db: Session, asset_id: uuid.UUID):
     return db.query(database.Asset).options(selectinload(database.Asset.owner_ref)).filter(database.Asset.id == asset_id).first()
+
+def get_assets(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(database.Asset).options(selectinload(database.Asset.owner_ref)).offset(skip).limit(limit).all()
 
 def update_asset(db: Session, asset_id: uuid.UUID, asset_update: schemas.AssetUpdate) -> Optional[database.Asset]:
     db_asset = db.query(database.Asset).filter(database.Asset.id == asset_id).first()
