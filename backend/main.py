@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from contextlib import asynccontextmanager
-from . import database, schemas, crud
+from . import database, schemas, crud, auth
 import uuid
 
 @asynccontextmanager
@@ -16,7 +16,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 @app.post("/integrations/owner", response_model=schemas.OwnerSchema)
-def create_owner(owner: schemas.OwnerCreate, db: Session = Depends(database.get_db)):
+def create_owner(owner: schemas.OwnerCreate, db: Session = Depends(database.get_db), current_user: str = Depends(auth.get_current_user)):
     db_owner = database.Owner(**owner.model_dump())
     db.add(db_owner)
     db.commit()
@@ -26,9 +26,7 @@ def create_owner(owner: schemas.OwnerCreate, db: Session = Depends(database.get_
 
 @app.put("/integrations/owner/{owner_id}", response_model=schemas.OwnerSchema)
 def update_owner(
-    owner_id: uuid.UUID,
-    owner_update: schemas.OwnerUpdate,
-    db: Session = Depends(database.get_db),
+    owner_id: uuid.UUID, owner_update: schemas.OwnerUpdate, db: Session = Depends(database.get_db),current_user: str = Depends(auth.get_current_user)
 ):
     db_owner = crud.update_owner(db, owner_id=owner_id, owner_update=owner_update)
 
@@ -38,7 +36,7 @@ def update_owner(
     return db_owner
 
 @app.get("/integrations/owner/{owner_id}", response_model=schemas.OwnerSchema)
-def read_owner(owner_id: uuid.UUID, db: Session = Depends(database.get_db)):
+def read_owner(owner_id: uuid.UUID, db: Session = Depends(database.get_db), current_user: str = Depends(auth.get_current_user)):
     owner = crud.get_owner(db, owner_id=owner_id)
 
     if owner is None:
@@ -49,7 +47,7 @@ def read_owner(owner_id: uuid.UUID, db: Session = Depends(database.get_db)):
 @app.delete("/integrations/owner/{owner_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_owner(
     owner_id: uuid.UUID,
-    db: Session = Depends(database.get_db),
+    db: Session = Depends(database.get_db), current_user: str = Depends(auth.get_current_user)
 ):
     db_owner = crud.delete_owner(db, owner_id=owner_id)
 
@@ -59,7 +57,7 @@ def delete_owner(
     return
 
 @app.post("/integrations/asset", response_model=schemas.AssetSchema)
-def create_asset(asset: schemas.AssetCreate, db: Session = Depends(database.get_db)):
+def create_asset(asset: schemas.AssetCreate, db: Session = Depends(database.get_db), current_user: str = Depends(auth.get_current_user)):
     owner = crud.get_owner(db, owner_id=asset.owner_id)
     
     if owner is None:
@@ -76,7 +74,7 @@ def create_asset(asset: schemas.AssetCreate, db: Session = Depends(database.get_
 @app.get("/integrations/asset/{asset_id}", response_model=schemas.AssetSchema)
 def read_asset(
     asset_id: uuid.UUID, 
-    db: Session = Depends(database.get_db),
+    db: Session = Depends(database.get_db), current_user: str = Depends(auth.get_current_user)
 ):
     asset = crud.get_asset(db, asset_id=asset_id)
 
@@ -89,22 +87,23 @@ def read_asset(
 def update_asset(
     asset_id: uuid.UUID,
     asset_update: schemas.AssetUpdate,
-    db: Session = Depends(database.get_db),
+    db: Session = Depends(database.get_db), current_user: str = Depends(auth.get_current_user)
 ):
     db_asset = crud.update_asset(db, asset_id=asset_id, asset_update=asset_update)
 
     if db_asset is None:
         if asset_update.owner_id is not None:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Responsável com ID {asset_update.owner_id} não encontrado")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Responsável com ID {asset_update.owner} não encontrado")
 
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Ativo com ID {asset_id} não encontrado.")
+
 
     return db_asset
 
 @app.delete("/integrations/asset/{asset_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_asset(
     asset_id: uuid.UUID, 
-    db: Session = Depends(database.get_db),
+    db: Session = Depends(database.get_db), current_user: str = Depends(auth.get_current_user)
 ):
     db_asset = crud.delete_asset(db, asset_id=asset_id)
 
@@ -112,3 +111,18 @@ def delete_asset(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Ativo com ID {asset_id} não encontrado")
 
     return
+
+@app.post("/integrations/auth", response_model=schemas.Token)
+def login_for_access_token(form_data: schemas.LoginData):
+    if form_data.login != "eyesonasset" or form_data.password != "eyesonasset":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Credenciais inválidas.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    access_token = auth.create_access_token(
+        data={"sub": form_data.login}
+    )
+
+    return {"access_token": access_token, "token_type": "bearer"}

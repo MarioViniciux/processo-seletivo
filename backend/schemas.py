@@ -30,4 +30,12 @@ class AssetSchema(AssetCreate):
 class AssetUpdate(BaseModel):
     name: Optional[str] = Field(None, max_length=140, description="Nome do ativo")
     category: Optional[str] = Field(None, max_length=60, description="Categoria (ex.: Aeronave, Navio)")
-    owner: Optional[UUID4] = None
+    owner_id: Optional[UUID4] = None
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+class LoginData(BaseModel):
+    login: str
+    password: str

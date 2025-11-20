@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, String, ForeignKey
+from sqlalchemy import create_engine, Column, String, Integer, ForeignKey, Boolean
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 from sqlalchemy.dialects.postgresql import UUID 
 import uuid
@@ -14,7 +14,6 @@ Base = declarative_base()
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 class Owner(Base):
-    """Estrutura do Responsável (Owner)"""
     __tablename__ = "owners"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

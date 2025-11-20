@@ -2,8 +2,8 @@
 
 * [X] ~~*Concluir o 1° nível do backend*~~ [2025-11-20]
 * [X] ~~*Concluir o 2° nível do backend*~~ [2025-11-20]
-* [ ] Concluir o 3° nível do backend
-* [ ] Concluir o 4° nível do backend
+* [X] ~~*Concluir o 3° nível do backend*~~ [2025-11-20]
+* [X] ~~*Concluir o 4° nível do backend*~~ [2025-11-20]
 * [ ] Concluir o 5° nível do backend
 * [ ] Adicionar rotas CRUD para usuários
 * [ ] Revisar, remover trechos inúteis e refatorar o que precisar
@@ -26,25 +26,25 @@
 * [X] ~~*Criar teste de POST owner bem-sucedida*~~ [2025-11-20]
 * [X] ~~*Criar teste de POST owner mal sucedida por falta de nome, email e telefone*~~ [2025-11-20]
 * [X] ~~*Criar teste de POST owner mal sucedida por formato de email inválido*~~ [2025-11-20]
-* [ ] Criar teste de POST owner mal sucedida por tamanho de nome, email e telefone
+* [X] ~~*Criar teste de POST owner mal sucedida por tamanho de nome, email e telefone*~~ [2025-11-20]
 
 <h5>PUT</h5>
 
-* [ ] Criar teste de PUT owner bem-sucedida (atualização parcial e completa)
-* [ ] Criar teste de PUT owner mal sucedida por ID com formato inválido
-* [ ] Criar teste de PUT owner mal sucedida por ID inexistente
-* [ ] Criar teste de PUT owner mal sucedida por tamanho de campo
+* [X] ~~*Criar teste de PUT owner bem-sucedida (atualização parcial e completa)*~~ [2025-11-20]
+* [X] ~~*Criar teste de PUT owner mal sucedida por ID com formato inválido*~~ [2025-11-20]
+* [X] ~~*Criar teste de PUT owner mal sucedida por ID inexistente*~~ [2025-11-20]
+* [X] ~~*Criar teste de PUT owner mal sucedida por tamanho de campo*~~ [2025-11-20]
 
 <h5>GET</h5>
 
 * [X] ~~*Criar teste de GET owner bem-sucedida*~~ [2025-11-20]
-* [ ] Criar teste de GET owner mal sucedida por ID com formato inválido
+* [X] ~~*Criar teste de GET owner mal sucedida por ID com formato inválido*~~ [2025-11-20]
 * [X] ~~*Criar teste de GET owner mal sucedida por ID inexistente*~~ [2025-11-20]
 
 <h5>DELETE</h5>
 
 * [X] ~~*Criar teste de DELETE owner bem-sucedida e verificar se o elemento sumiu*~~ [2025-11-20]
-* [ ] Criar teste de DELETE owner mal sucedida por ID com formato inválido
+* [X] ~~*Criar teste de DELETE owner mal sucedida por ID com formato inválido*~~ [2025-11-20]
 * [X] ~~*Criar teste de DELETE owner mal sucedida por ID inexistente*~~ [2025-11-20]
 
 <h4 align="center">Testes de Asset</h4>
@@ -52,26 +52,27 @@
 <h5>POST</h5>
 
 * [X] ~~*Criar teste de POST asset bem-sucedida*~~ [2025-11-20]
-* [ ] Criar teste de POST asset mal sucedida por falta de owner_id
-* [ ] Criar teste de POST asset mal sucedida por falta de name
-* [ ] Criar teste de POST asset mal sucedida por falta de category
+* [X] ~~*Criar teste de POST asset mal sucedida por falta de owner_id*~~ [2025-11-20]
+* [X] ~~*Criar teste de POST asset mal sucedida por owner_id com formato inválido*~~ [2025-11-20]
+* [X] ~~*Criar teste de POST asset mal sucedida por falta de campos obrigatórios*~~ [2025-11-20]
+* [X] ~~*Criar teste de POST asset mal sucedida por tamanho de campos*~~ [2025-11-20]
 
 <h5>PUT</h5>
 
 * [ ] Criar teste de PUT asset bem-sucedida (atualização completa e parcial)
-* [ ] Criar teste de PUT asset mal sucedida por ID com formato inválido
-* [ ] Criar teste de PUT asset mal sucedida por ID inexistente
+* [X] ~~*Criar teste de PUT asset mal sucedida por ID com formato inválido*~~ [2025-11-20]
+* [X] ~~*Criar teste de PUT asset mal sucedida por ID inexistente*~~ [2025-11-20]
 * [ ] Criar teste de PUT asset mal sucedida por owner_id inexistente
 
 <h5>GET</h5>
 
-* [ ] Criar teste de GET asset bem-sucedida
-* [ ] Criar teste de GET asset mal sucedida por ID com formato inválido
-* [ ] Criar teste de GET asset mal sucedida por ID inexistente
+* [X] ~~*Criar teste de GET asset bem-sucedida*~~ [2025-11-20]
+* [X] ~~*Criar teste de GET asset mal sucedida por ID com formato inválido*~~ [2025-11-20]
+* [X] ~~*Criar teste de GET asset mal sucedida por ID inexistente*~~ [2025-11-20]
 
 <h5>DELETE</h5>
 
-* [ ] Criar teste de DELETE asset bem-sucedida
-* [ ] Criar teste de DELETE asset mal sucedida por ID com formato inválido
-* [ ] Criar teste de DELETE asset mal sucedida por ID inexistente
-* [ ] Criar teste de DELETE para verificar se deletar o Owner faz o Asset ser deletado também
+* [X] ~~*Criar teste de DELETE asset bem-sucedida*~~ [2025-11-20]
+* [X] ~~*Criar teste de DELETE asset mal sucedida por ID com formato inválido*~~ [2025-11-20]
+* [X] ~~*Criar teste de DELETE asset mal sucedida por ID inexistente*~~ [2025-11-20]
+* [X] ~~*Criar teste de DELETE para verificar se deletar o Owner faz o Asset ser deletado também*~~ [2025-11-20]

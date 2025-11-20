@@ -58,11 +58,30 @@ def update_asset(db: Session, asset_id: uuid.UUID, asset_update: schemas.AssetUp
         for key, value in update_data.items():
             setattr(db_asset, key, value)
 
-        db.add(db_asset)
-        db.commit()
-        db.refresh(db_asset)
+        
+        try:
+            db.commit()
+            db.refresh(db_asset)
 
-        return get_asset(db, asset_id=asset_id)
+            update_count = db.query(database.Asset).filter(database.Asset.id == asset_id).update(update_data, synchronize_session="fetch")
+
+            if update_count == 0:
+                db.rollback() 
+                return None
+
+            updated_asset = (
+                db.query(database.Asset)
+                .options(selectinload(database.Asset.owner_ref))
+                .filter(database.Asset.id == asset_id)
+                .first()
+            )
+        
+            return updated_asset
+        except Exception as e:
+            db.rollback()
+            print(f"Erro durante o commit: {e}")
+            
+            return None
     
     return None
 
