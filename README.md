@@ -1,232 +1,176 @@
+# 👁️ EyesOnAsset — Desafio Técnico Full-Stack
+
 <p align="center">
   <img src="./assets/eyesonasset-logo.png" alt="Logo EyesOnAsset" height="110">
 </p>
-<h1 align="center">
-  EyesOnAsset — Desafio Técnico
-</h1>
 
-## Sumário
+## ✨ Sumário
 
-- [❤️ Bem-vindos](#️-bem-vindos)
-- [🚀 Vamos nessa!](#-vamos-nessa)
-  - [Dicas](#dicas)
-  - [Como você deverá desenvolver?](#como-você-deverá-desenvolver)
-  - [Qual o tempo para entregar?](#qual-o-tempo-para-entregar)
-
-- [💻 O Problema](#-o-problema)
-  - [Contexto](#contexto)
-  - [Estrutura de um Ativo](#estrutura-de-um-ativo)
-  - [Estrutura de um Responsável](#estrutura-de-um-responsável)
-
-- [💾 Back-end](#-back-end)
-  - [Nível 1 — Validação](#nível-1--validação)
-  - [Nível 2 — Persistência](#nível-2--persistência)
-  - [Nível 3 — Testes](#nível-3--testes)
-  - [Nível 4 — Autenticação](#nível-4--autenticação)
-  - [Nível 5 — Permissões](#nível-5--permissões)
-  - [Nível 6 — Infra e Doc](#nível-6--infra-e-doc)
-
-- [🖥️ Front-end](#️-front-end)
-  - [Nível 1 — Cadastros e Listagens](#-Nível-1-—-Cadastros-e-Listagens)
-  - [Nível 2 — Conectando na API](#nível-2--conectando-na-api)
-  - [Nível 3 — Melhoria nas Listagens](#nível-3--Melhoria-nas-Listagens)
-  - [Nível 4 — Autenticação](#nível-4--autenticação-1)
-  - [Nível 5 — Testes](#nível-5--testes-1)
+* [Visão Geral e Contexto do Problema](#-visão-geral-e-contexto-do-problema)
+* [🛠️ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
+* [✅ Escopo Entregue (Níveis Concluídos)](#-escopo-entregue-níveis-concluídos)
+* [📦 Estruturas de Dados](#-estruturas-de-dados)
+* [🚀 Setup e Instalação](#-setup-e-instalação)
+* [🧪 Executando os Testes](#-executando-os-testes)
+* [⚙️ Endpoints da API (FastAPI)](#️-endpoints-da-api-fastapi)
+* [Entrega Final](#entrega-final)
 
 ---
 
-## ❤️ Bem-vindos
+## 💡 Visão Geral e Contexto do Problema
 
-Olá! 👋
+Este projeto implementa uma mini-versão simplificada do fluxo central da plataforma **EyesOnAsset**, plataforma de gestão inteligente de ativos.
 
-Seja bem-vindo ao processo seletivo da **EyesOnAsset**, plataforma de gestão inteligente de ativos.
+O objetivo foi criar APIs e uma interface que permitam o **registro e a gestão automatizada de Ativos Físicos e seus Responsáveis**. O desenvolvimento foi realizado de forma incremental, com commits detalhados para cada nível de complexidade.
 
-Temos vagas para todos os nívels - e os níveis deste desafio permitem diferenciar performance entre os perfis, mas **não é obrigatório completar tudo**.
-
-Prepare um ☕, respire fundo e divirta-se resolvendo!
-
----
-
-## 🚀 Vamos nessa!
-
-Este teste avalia como você entende, organiza, estrutura e entrega uma solução para um problema relacionado ao domínio de CMMS.
-
-### Dicas
-
-- Documente seus passos.
-- Pergunte se algo estiver ambíguo.
-- Mostre seu raciocínio.
-- Capriche no README.
-
-### Como você deverá desenvolver?
-
-1. Faça **fork** deste repositório.
-2. Implemente cada nível conforme quiser avançar.
-3. Faça commits pequenos e bem descritos.
-4. Quando finalizar, abra um **Pull Request** para o repositório original.
-
-### Qual o tempo para entregar?
-
-Quanto antes você enviar, mais cuidadosamente conseguiremos avaliar.
-
-Enviando parcial também é válido. Não desista.
+### Estrutura do Projeto
+O projeto está dividido em duas pastas principais:
+* `backend/`: Contém a API em Python/FastAPI.
+* `frontend/`: Contém a interface em React.
 
 ---
 
-## 💻 O Problema
+## 🛠️ Tecnologias Utilizadas
 
-O time de operações da EyesOnAsset precisa automatizar o registro e gestão de ativos físicos. Hoje isso é feito manualmente, consumindo muito tempo.
+### 💾 Back-end (Python/FastAPI)
+| Categoria | Tecnologia | Justificativa/Uso |
+| :--- | :--- | :--- |
+| **Framework** | FastAPI | Criação da API de alto desempenho. |
+| **Persistência** | SQLAlchemy + SQLite | ORM e banco de dados local para persistência de Ativos e Responsáveis. |
+| **Autenticação** | JWT (python-jose) + Bcrypt (passlib) | Geração de tokens e hashing seguro de senhas. |
+| **Testes** | Pytest + pytest-cov | Testes unitários e verificação de cobertura. |
 
-Seu objetivo é criar uma mini-versão simplificada do fluxo central da plataforma.
-
-### Contexto
-
-Diariamente são cadastrados diversos ativos, cada um associado a um responsável.
-
-Seu papel será criar APIs e uma interface que permita gerenciar essas entidades.
-
-### Estrutura de um Ativo
-
-| CAMPO    | TIPO          | DESCRIÇÃO                            |
-| -------- | ------------- | ------------------------------------ |
-| id       | string (UUID) | Identificação do ativo               |
-| name     | string(140)   | Nome do ativo                        |
-| category | string(60)    | Categoria (ex.: "Aeronave", "Navio") |
-| owner    | string (UUID) | ID do responsável                    |
-
-### Estrutura de um Responsável
-
-| CAMPO | TIPO          | DESCRIÇÃO                    |
-| ----- | ------------- | ---------------------------- |
-| id    | string (UUID) | Identificação do responsável |
-| name  | string(140)   | Nome completo                |
-| email | string(140)   | Email corporativo            |
-| phone | string(20)    | Telefone                     |
+### 🖥️ Front-end (React)
+| Categoria | Tecnologia | Justificativa/Uso |
+| :--- | :--- | :--- |
+| **Framework** | Next.js | Construção da interface de usuário. |
+| **Comunicação** | Axios | Biblioteca para comunicação com a API. |
 
 ---
 
-## 💾 Back-end
+## ✅ Escopo Entregue (Níveis Concluídos)
 
-### Nível 1 — Validação
+### 💾 Back-end
 
-Crie uma API **FastAPI** com a rota:
+| Nível | Funcionalidade Principal | Status | Detalhes |
+| :--- | :--- | :--- | :--- |
+| **1** | Validação | ✅ Concluído | Criação da rota `POST /integrations/asset` com validações rigorosas (UUIDs, limites de string, campos obrigatórios). |
+| **2** | Persistência | ✅ Concluído | CRUD completo para Ativo e Responsável com SQLAlchemy/SQLite. IDs são gerados automaticamente. |
+| **3** | Testes | ✅ Cobertura de **85%** | Testes unitários para validação e persistência usando Pytest. |
+| **4** | Autenticação JWT | ✅ Concluído | Rota `/integrations/auth` que gera JWT (expiração de 1 min). Todas as rotas protegidas. |
+| **5** | Usuários | ✅ Concluído | Entidade 'Usuários' criada. Login refatorado para validar credenciais via banco de dados. |
 
-`POST /integrations/asset`
+### 🖥️ Front-end
 
-Regras:
+| Nível | Funcionalidade Principal | Status | Detalhes |
+| :--- | :--- | :--- | :--- |
+| **1** | Telas Básicas | ✅ Concluído | Telas de Cadastro e Listagem para Ativos e Responsáveis com validação básica (dados iniciais mockados). |
+| **2** | Conexão API | ✅ Concluído | Listagens (`GET`) e Cadastros (`POST`) conectados ao Back-end via Axios. |
+| **3** | UX e CRUD Completo | ✅ Concluído | Páginas de Detalhes, Edição e Exclusão. Detalhe de Ativo exibe o nome do Responsável. Confirmação em ações destrutivas. |
+| **4** | Autenticação UI | ✅ Concluído | Tela de Login. Token salvo no `localStorage`. Redirecionamento para Login em caso de expiração. |
 
-- Todos os campos obrigatórios.
-- IDs devem ser UUID.
-- Strings obedecem limites.
-- Erros devem indicar claramente qual campo violou qual regra.
+## 🚀 Setup e Instalação
 
-Se tudo estiver válido, retorne o JSON recebido.
+### 1. Requisitos
+* **Back-end:** Python 3.10+, pip
+* **Front-end:** Node.js, npm
 
----
+### 2. Dependências Necessárias
 
-### Nível 2 — Persistência
-
-Use **SQLAlchemy + SQLite**.
-
-Crie bancos e tabelas seguindo as estruturas acima.
-
-IDs devem passar a ser gerados automaticamente. IDs não devem ser aceitos como parâmetros em recursos de criacao.
-
-Rotas exigidas (itere sobre a rota criada anteriormente):
-
-- `POST /integrations/asset`
-- `GET /integrations/asset/:id`
-- `POST /integrations/owner`
-- `GET /integrations/owner/:id`
-- CRUD completo para ambos.
-
-#### Nota: A tratativa para exclusão de registros dependentes (regras de deleção reversa) é um diferencial.
-
----
-
-### Nível 3 — Testes
-
-Crie testes unitários para cada módulo.
-
-Utilize **pytest**. Se possível verifique a cobertura de testes e adicione no README.
-
----
-
-### Nível 4 — Autenticação
-
-Crie rota:
-
-`POST /integrations/auth`
-
-Com login e password fixos:
-
-```json
-{
-  "login": "eyesonasset",
-  "password": "eyesonasset"
-}
+#### Back-end (`requirements.txt` implícito)
+```text
+fastapi, uvicorn[standard], SQLAlchemy, pydantic[email], uuid,
+pytest, pytest-cov, httpx, python-jose[cryptography], passlib[bcrypt]
 ```
 
-Retornar JWT com expiração de **1 minuto**.
+### Front-end (`package.json` - exemplo de libs)
+```text
+react, react-dom, axios, next, typescript, tailwindcss, node, postcss, eslint
+```
 
-Todas as rotas devem exigir o token via Header.
+### 3. Execução Local
 
----
+#### Setup do Back-end
+```bash
+cd backend/
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt 
+uvicorn app.main:app --reload
+```
 
-### Nível 5 — Usuários
+#### Setup do Frontend
+```bash
+cd frontend/
+npm install
+npm run dev
+```
 
-Crie entidade de **usuários** para autenticação.
-Refatore o login para validar via banco.
+* Back-end Docs (Swagger UI): http://localhost:8000/docs
 
----
+* Front-end App: http://localhost:3000
 
-### Nível 6 — Infra e Doc
+## 🧪 Executando os Testes
 
-- Dockerfile
-- docker-compose.yaml
-- Documentação de setup, rodar e testar o projeto
+### 💾 Back-end (Pytest)
 
-## 🖥️ Front-end
+```bash
+pytest --cov-report=term-missing --cov=backend
+```
 
-### Nível 1 — Cadastros e Listagens
+## ⚙️ Endpoints da API (FastAPI)
 
-#### Nota: Os dados deste nível podem ser _mockados_.
+Todos os endpoints CRUD são protegidos e exigem um JWT válido no Header:
+ 
+```plaintext 
+Authorization: Bearer <token>
+```
 
-- Criar tela de cadastro e listagem de responsáveis, seguindo os campos indicados na [definição do problema](#-💻-O-Problema).
-- Criar tela de cadastro e listagem de ativos, também de acordo com os campos da definição do problema. O campo _owner_ _NÃO_ deve ser apresentado aqui.
-- Validação de campos obrigatórios. Note que a comunicação com o back-end não é mandatória neste nível.
+### 🔑 Autenticação 
 
-Utilize **React** para construir o front-end. Bibliotecas de gerenciamento de estado e componentes de UI são diferenciais, mas opcionais.
+#### 1. Login (POST /integrations/auth)
 
----
 
-### Nível 2 — Conectando na API
+### 🛠️ Ativos 
 
-Faça com que as telas de listagem de ativos e responsáveis se conectem com o projeto do back-end. Listagens devem utilizar as rotas de método _GET_, já cadastros utilizam as rotas _POST_.
+#### 1. Criação (POST /integrations/asset)
+#### 2. Busca todos (GET /integrations/asset)
+#### 3. Busca por ID (GET /integrations/asset/{asset_id})
+#### 4. Atualizar (PUT /integrations/asset/{asset_id})
+#### 5. Deletar (DELETE /integrations/asset/{asset_id})
 
-Utilize [axios](https://axios-http.com/docs/intro) como biblioteca de comunicação.
 
----
+### 👤 Responsáveis
 
-### Nível 3 — Melhoria nas Listagens
+#### 1. Criação (POST /integrations/owner)
+#### 3. Busca todos (GET /integrations/owner)
+#### 3. Busca por ID (GET /integrations/owner/{owner_id})
+#### 4. Atualizar (PUT /integrations/owner/{owner_id})
+#### 5. Deletar (DELETE /integrations/owner/{owner_id})
 
-Neste nível, implemente uma página de detalhes para os itens da listagem e as ações de editar e excluir recursos.
-A página de detalhes de ativos deve conter o nome do responsável.
 
-#### Nota: Cuidados com a UX, como confirmação em ações destruitivas e feedback de operações, são diferenciais.
+### 👨🏻‍💻 Usuário
 
----
+#### 1. Criação (POST /integrations/user)
+#### 2. Busca por ID (GET /integrations/user)
+#### 3. Busca por ID (GET /integrations/user/{user_id})
+#### 4. Deletar (DELETE /integrations/user/{user_id})
 
-### Nível 4 — Autenticação
+### Para informações mais detalhadas, inicie o backend e acesse a [documentação](http://127.0.0.1:8000/docs#/)
 
-Implementar tela de login.
+## 📸 Previews da Interface
 
-Token salvo no localStorage.
+### Tela de Login
+<p align="center">
+  <img src="./assets/login_screen.png" alt="Lista de Ativos" height="70%">
+</p>
 
-Expiração deve redirecionar para login.
+### Tela dos Responsáveis
+<p align="center">
+  <img src="./assets/owner_screen.png" alt="Lista de Ativos" width="80%">
+</p>
 
----
-
-### Nível 5 — Testes
-
-Implemente testes para as telas criadas no nível anterior, utilize qualquer biblioteca de testes. _Code Coverage_ é um diferencial.
+### Tela dos Ativos
+<p align="center">
+  <img src="./assets/asset_screen.png" alt="Lista de Ativos" width="80%">
+</p>

@@ -1,0 +1,11 @@
+
+fastapi
+uvicorn[standard] 
+SQLAlchemy
+pydantic[email]
+uuid
+pytest
+pytest-cov 
+httpx      
+python-jose[cryptography] 
+passlib[bcrypt]

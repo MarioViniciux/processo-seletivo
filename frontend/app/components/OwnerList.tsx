@@ -79,14 +79,12 @@ const OwnerList: React.FC<OwnerListProps> = ({ fetchTrigger, onEdit }) => {
                   >
                     {deletingId === owner.id ? '...' : 'Excluir'}
                   </button>
-                  <td style={{ textAlign: 'center', display: 'flex', gap: '10px', justifyContent: 'center' }}>
-                    <button 
-                      onClick={() => onEdit(owner)}
-                      style={{ backgroundColor: '#faad14',color: 'white', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer' }}
-                    >
-                      Editar
-                    </button>
-                  </td>
+                  <button 
+                    onClick={() => onEdit(owner)}
+                    style={{ backgroundColor: '#faad14',color: 'white', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer' }}
+                  >
+                    Editar
+                  </button>
                 </td>
               </tr>
             ))

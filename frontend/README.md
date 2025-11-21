@@ -1,1 +1,0 @@
-Importante lembrar que o C, U, D do CRUD estão com as rotas protegidas, então, apesar de estar funcional não é possível fazer o cadastro de um Owner ou Asset.

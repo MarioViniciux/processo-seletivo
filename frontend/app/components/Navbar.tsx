@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -7,7 +6,6 @@ import { usePathname, useRouter } from 'next/navigation';
 const Navbar = () => {
     const pathname = usePathname();
     const router = useRouter();
-
     const hiddenRoutes = ['/login', '/register'];
 
     if (hiddenRoutes.includes(pathname)) {

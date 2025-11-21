@@ -14,7 +14,7 @@
 * [X] ~~*Concluir o 1° nível do frontend*~~ [2025-11-20]
 * [X] ~~*Concluir o 2° nível do frontend*~~ [2025-11-20]
 * [X] ~~*Concluir o 3° nível do frontend*~~ [2025-11-20]
-* [ ] Concluir o 4° nível do frontend
+* [X] ~~*Concluir o 4° nível do frontend*~~ [2025-11-20]
 * [ ] Concluir o 5° nível do frontend
 * [ ] Documentar frontend
 
