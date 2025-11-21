@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import AssetForm from '@/app/components/AssetForm';
 import AssetList from '@/app/components/AssetList';
 import { Asset } from '@/app/types/data'; 
+import { useAuthRedirect } from '@/hooks/useAuthRedirect';
 
 const AssetsPage = () => {
+    useAuthRedirect()
+
     const [fetchTrigger, setFetchTrigger] = useState(0); 
     const [editingAsset, setEditingAsset] = useState<Asset | null>(null);
 

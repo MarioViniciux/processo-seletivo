@@ -4,16 +4,16 @@
 * [X] ~~*Concluir o 2° nível do backend*~~ [2025-11-20]
 * [X] ~~*Concluir o 3° nível do backend*~~ [2025-11-20]
 * [X] ~~*Concluir o 4° nível do backend*~~ [2025-11-20]
-* [ ] Concluir o 5° nível do backend
-* [ ] Adicionar rotas CRUD para usuários
+* [X] ~~*Concluir o 5° nível do backend*~~ [2025-11-20]
+* [X] ~~*Adicionar rotas CRUD para usuários*~~ [2025-11-20]
 * [ ] Revisar, remover trechos inúteis e refatorar o que precisar
 * [ ] Documentar backend
 
 <h3 align="center">Frontend</h3>
 
-* [ ] Concluir o 1° nível do frontend
-* [ ] Concluir o 2° nível do frontend
-* [ ] Concluir o 3° nível do frontend
+* [X] ~~*Concluir o 1° nível do frontend*~~ [2025-11-20]
+* [X] ~~*Concluir o 2° nível do frontend*~~ [2025-11-20]
+* [X] ~~*Concluir o 3° nível do frontend*~~ [2025-11-20]
 * [ ] Concluir o 4° nível do frontend
 * [ ] Concluir o 5° nível do frontend
 * [ ] Documentar frontend

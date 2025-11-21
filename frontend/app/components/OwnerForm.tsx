@@ -71,13 +71,13 @@ const OwnerForm: React.FC<OwnerFormProps> = ({ onOwnerUpdated, initialData, onCa
   };
 
   return (
-    <div className="form-container" style={{ marginBottom: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '8px' }}>
+    <div className="form-container" style={{ display: 'flex', flexDirection: "column", marginBottom: '20px', padding: '15px', alignItems: "center", border: '1px solid #ddd', borderRadius: '8px' }}>
       <h3>{initialData ? `Editar: ${initialData.name}` : 'Cadastrar Novo Responsável'}</h3>
       
       {error && <p style={{ color: 'red', fontWeight: 'bold' }}>{error}</p>}
       {success && <p style={{ color: 'green', fontWeight: 'bold' }}>{success}</p>}
       
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '400px' }}>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '600px', maxWidth: '900px' }}>
         <input type="text" name="name" value={formData.name} style={{ padding: '8px' }} onChange={(e) => setFormData({...formData, name: e.target.value})} placeholder="Nome" required />
         <input type="email" name="email" value={formData.email} style={{ padding: '8px' }} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="Email" required />
         <input type="tel" name="phone" value={formData.phone} style={{ padding: '8px' }} onChange={(e) => setFormData({...formData, phone: e.target.value})} placeholder="Telefone" />

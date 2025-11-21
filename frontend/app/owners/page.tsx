@@ -2,9 +2,12 @@
 import React, { useState } from 'react';
 import OwnerForm from '@/app/components/OwnerForm';
 import OwnerList from '@/app/components/OwnerList';
+import { useAuthRedirect } from "@/hooks/useAuthRedirect"
 import { Owner } from "@/app/types/data"
 
 const OwnersPage = () => {
+    useAuthRedirect()
+    
     const [fetchTrigger, setFetchTrigger] = useState(0); 
     const [editingOwner, setEditingOwner] = useState<Owner | null>(null);
 
