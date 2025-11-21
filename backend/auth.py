@@ -15,7 +15,7 @@ from sqlalchemy.orm import Session
 from typing import Optional, List
 from jose import jwt, JWTError
 from fastapi.security import OAuth2PasswordBearer
-from . import database
+import database
 
 SECRET_KEY = "chave_secreta"
 ALGORITHM = "HS256"

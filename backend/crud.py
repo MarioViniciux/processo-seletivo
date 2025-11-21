@@ -7,7 +7,7 @@ no banco de dados usando SQLAlchemy ORM.
 
 from sqlalchemy.orm import Session, selectinload
 from typing import Optional
-from . import database, schemas
+import database, schemas
 import uuid
 
 def get_owner(db: Session, owner_id: uuid.UUID):

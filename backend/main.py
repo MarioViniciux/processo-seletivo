@@ -16,7 +16,7 @@ from typing import List
 from sqlalchemy.orm import Session
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
-from . import database, schemas, crud, auth
+import database, schemas, crud, auth
 import uuid
 
 @asynccontextmanager
